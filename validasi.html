@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time Input Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-group input {
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            border-color: #007BFF;
+        }
+        .indicator {
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+        .valid {
+            color: green;
+        }
+        .invalid {
+            color: red;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Input Validation</h1>
+    </div>
+
+    <div class="input-group">
+        <label for="email">Email:</label>
+        <input type="text" id="email">
+        <div id="emailIndicator" class="indicator"></div>
+    </div>
+
+    <div class="input-group">
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone">
+        <div id="phoneIndicator" class="indicator"></div>
+    </div>
+
+    <div class="input-group">
+        <label for="postalCode">Postal Code (US):</label>
+        <input type="text" id="postalCode">
+        <div id="postalCodeIndicator" class="indicator"></div>
+    </div>
+
+    <div class="input-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password">
+        <div id="passwordIndicator" class="indicator"></div>
+    </div>
+
+    <div class="input-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username">
+        <div id="usernameIndicator" class="indicator"></div>
+    </div>
+</div>
+
+<script>
+    // Regular expressions
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\+?(\d.*){3,}$/;
+    const postalCodeRegex = /^\d{5}(?:[-\s]\d{4})?$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const usernameRegex = /^[a-zA-Z0-9]{3,16}$/;
+
+    // Real-time validation functions
+    function validateInput(input, regex, indicator) {
+        if (regex.test(input.value)) {
+            indicator.textContent = "Valid";
+            indicator.classList.remove("invalid");
+            indicator.classList.add("valid");
+        } else {
+            indicator.textContent = "Invalid";
+            indicator.classList.remove("valid");
+            indicator.classList.add("invalid");
+        }
+    }
+
+    // Event listeners
+    document.getElementById("email").addEventListener("input", function() {
+        validateInput(this, emailRegex, document.getElementById("emailIndicator"));
+    });
+
+    document.getElementById("phone").addEventListener("input", function() {
+        validateInput(this, phoneRegex, document.getElementById("phoneIndicator"));
+    });
+
+    document.getElementById("postalCode").addEventListener("input", function() {
+        validateInput(this, postalCodeRegex, document.getElementById("postalCodeIndicator"));
+    });
+
+    document.getElementById("password").addEventListener("input", function() {
+        validateInput(this, passwordRegex, document.getElementById("passwordIndicator"));
+    });
+
+    document.getElementById("username").addEventListener("input", function() {
+        validateInput(this, usernameRegex, document.getElementById("usernameIndicator"));
+    });
+</script>
+
+</body>
+</html>
